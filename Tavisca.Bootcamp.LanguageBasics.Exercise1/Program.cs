@@ -20,77 +20,69 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             Console.WriteLine($"{args} : {result}");
         }
 
+
         public static int FindDigit(string equation)
         {
             // Add your code here.
-            string result = "0", k;
-            int operandone, operandtwo, m;
-            string[] a = equation.Split(new Char[] { '*', '=' });
-            if (a[2].Contains("?"))
+            int result = -1;
+            string temp;
+            int operandone, operandtwo, operandthree;
+            string[] operands = equation.Split(new Char[] { '*', '=' });
+            if (operands[2].Contains("?"))
             {
-                operandone = Int32.Parse(a[0]);
-                operandtwo = Int32.Parse(a[1]);
-                m = operandone * operandtwo;
-                k = m.ToString();
-                if (k.Length != a[2].Length)
+                operandone = Int32.Parse(operands[0]);
+                operandtwo = Int32.Parse(operands[1]);
+                operandthree = operandone * operandtwo;
+                temp = operandthree.ToString();
+                if (temp.Length != operands[2].Length)
                     return -1;
                 else
                 {
-                    for (int x = 0; x < k.Length; x++)
-                        if (k[x] == a[2][x])
-                            continue;
-                        else if (a[2][x] == '?')
-                            result = k[x].ToString();
-                        else
-                            return -1;
+                    result = FindMissingDigit(temp, operands[2]);
+
                 }
             }
-            else if (a[0].Contains("?"))
+            else if (operands[0].Contains("?"))
             {
-                operandtwo = Int32.Parse(a[1]);
-                m = Int32.Parse(a[2]);
-                if (m % operandtwo != 0)
-                    return -1;
-                operandone = m / operandtwo;
-                k = operandone.ToString();
-                if (k.Length != a[0].Length)
-                    return -1;
-                else
-                {
-                    for (int x = 0; x < k.Length; x++)
-                        if (k[x] == a[0][x])
-                            continue;
-                        else if (a[0][x] == '?')
-                            result = k[x].ToString();
-                        else
-                            return -1;
-                }
-
-
+                result = GetLeftSideOperandDigit(operands[0], operands[1], operands[2]);
             }
             else
             {
-                operandone = Int32.Parse(a[0]);
-                m = Int32.Parse(a[2]);
-                if (m % operandone != 0)
-                    return -1;
-                operandtwo = m / operandone;
-                k = operandtwo.ToString();
-                if (k.Length != a[1].Length)
-                    return -1;
-                else
-                {
-                    for (int x = 0; x < k.Length; x++)
-                        if (k[x] == a[1][x])
-                            continue;
-                        else if (a[1][x] == '?')
-                            result = k[x].ToString();
-                        else
-                            return -1;
-                }
+                result = GetLeftSideOperandDigit(operands[1], operands[0], operands[2]);
+
             }
-            return Int32.Parse(result);
+            return result; ;
             //throw new NotImplementedException();
+        }
+        
+        private static int GetLeftSideOperandDigit(string operandOne, string operandTwo, string operandThree)
+        {
+            double dividendOperand = int.Parse(operandThree);
+            double divisorOperand = int.Parse(operandTwo);
+            double quotientOperand = dividendOperand / divisorOperand;
+            string temp = quotientOperand.ToString();
+            int result = -1;
+            if (dividendOperand % divisorOperand != 0 || temp.Length != operandOne.Length)
+                return result;
+            else
+
+                result = FindMissingDigit(temp, operandOne);
+
+
+            return result;
+
+        }
+        private static int FindMissingDigit(string calculatedString, string givenString)
+        {
+            int result = -1;
+            for (int x = 0; x < calculatedString.Length; x++)
+                if (calculatedString[x] == givenString[x])
+                    continue;
+                else if (givenString[x] == '?')
+                    result = (int)(calculatedString[x] - 48);//converting char to int
+                else
+                    return -1;
+            return result;
         }
     }
 }
