@@ -24,13 +24,13 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         {
             // Add your code here.
             string result = "0", k;
-            int l1, l2, m;
+            int operandone, operandtwo, m;
             string[] a = equation.Split(new Char[] { '*', '=' });
             if (a[2].Contains("?"))
             {
-                l1 = Int32.Parse(a[0]);
-                l2 = Int32.Parse(a[1]);
-                m = l1 * l2;
+                operandone = Int32.Parse(a[0]);
+                operandtwo = Int32.Parse(a[1]);
+                m = operandone * operandtwo;
                 k = m.ToString();
                 if (k.Length != a[2].Length)
                     return -1;
@@ -47,12 +47,12 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             }
             else if (a[0].Contains("?"))
             {
-                l2 = Int32.Parse(a[1]);
+                operandtwo = Int32.Parse(a[1]);
                 m = Int32.Parse(a[2]);
-                if (m % l2 != 0)
+                if (m % operandtwo != 0)
                     return -1;
-                l1 = m / l2;
-                k = l1.ToString();
+                operandone = m / operandtwo;
+                k = operandone.ToString();
                 if (k.Length != a[0].Length)
                     return -1;
                 else
@@ -70,12 +70,12 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             }
             else
             {
-                l1 = Int32.Parse(a[0]);
+                operandone = Int32.Parse(a[0]);
                 m = Int32.Parse(a[2]);
-                if (m % l1 != 0)
+                if (m % operandone != 0)
                     return -1;
-                l2 = m / l1;
-                k = l2.ToString();
+                operandtwo = m / operandone;
+                k = operandtwo.ToString();
                 if (k.Length != a[1].Length)
                     return -1;
                 else
