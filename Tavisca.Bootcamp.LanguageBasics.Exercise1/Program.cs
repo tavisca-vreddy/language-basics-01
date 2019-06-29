@@ -30,8 +30,8 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             string[] operands = equation.Split(new Char[] { '*', '=' });
             if (operands[2].Contains("?"))
             {
-                operandone = Int32.Parse(operands[0]);
-                operandtwo = Int32.Parse(operands[1]);
+                 Int32.TryParse(operands[0],out operandone);
+                Int32.TryParse(operands[1],out operandtwo);
                 operandthree = operandone * operandtwo;
                 temp = operandthree.ToString();
                 if (temp.Length != operands[2].Length)
@@ -75,14 +75,13 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         private static int FindMissingDigit(string calculatedString, string givenString)
         {
             int result = -1;
-            for (int x = 0; x < calculatedString.Length; x++)
-                if (calculatedString[x] == givenString[x])
-                    continue;
-                else if (givenString[x] == '?')
-                    result = (int)(calculatedString[x] - 48);//converting char to int
-                else
-                    return -1;
+            int index = givenString.IndexOf('?');
+            givenString = givenString.Replace('?', calculatedString[index]);
+            if (calculatedString.Equals(givenString))
+                result=(int)(calculatedString[index]-48);
             return result;
+
+            
         }
     }
 }
